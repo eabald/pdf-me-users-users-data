@@ -5,6 +5,7 @@ import { User } from './user.entity';
 import { RpcException } from '@nestjs/microservices';
 import { CreateUserDto } from './dto/createUser.dto';
 import { PostgresErrorCode } from '../database/postgresErrorCode.enum';
+import { ResetPasswordDto } from './dto/resetPassword.dto';
 
 @Injectable()
 export class UsersService {
@@ -52,5 +53,26 @@ export class UsersService {
       message: 'User with this id does not exist',
       statusCode: HttpStatus.NOT_FOUND,
     });
+  }
+
+  async setResettingPassword(email: string) {
+    return await this.usersRepository.update(
+      { email },
+      { isResettingPassword: true },
+    );
+  }
+
+  async updatePassword({ email, password }: ResetPasswordDto) {
+    return await this.usersRepository.update(
+      { email },
+      { isResettingPassword: false, password },
+    );
+  }
+
+  async confirmEmail(email: string) {
+    return await this.usersRepository.update(
+      { email },
+      { isEmailConfirmed: true },
+    );
   }
 }

@@ -16,4 +16,7 @@ export class User {
 
   @Column()
   public password: string;
+
+  @Column({ default: false })
+  public isResettingPassword: boolean;
 }
