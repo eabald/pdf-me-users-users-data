@@ -12,7 +12,6 @@ async function bootstrap() {
   const user = configService.get('RABBITMQ_USER');
   const password = configService.get('RABBITMQ_PASSWORD');
   const host = configService.get('RABBITMQ_HOST');
-  const queueName = configService.get('RABBITMQ_QUEUE_NAME');
 
   const RedisStore = createRedisStore(session);
   const redisClient = createClient({
@@ -33,7 +32,7 @@ async function bootstrap() {
     transport: Transport.RMQ,
     options: {
       urls: [`amqp://${user}:${password}@${host}`],
-      queue: queueName,
+      queue: 'usersQueue',
       noAck: false,
       queueOptions: {
         durable: true,
