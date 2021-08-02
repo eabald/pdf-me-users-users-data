@@ -56,23 +56,20 @@ export class UsersService {
   }
 
   async setResettingPassword(email: string) {
-    return await this.usersRepository.update(
-      { email },
-      { isResettingPassword: true },
-    );
+    await this.usersRepository.update({ email }, { isResettingPassword: true });
+    return true;
   }
 
   async updatePassword({ email, password }: ResetPasswordDto) {
-    return await this.usersRepository.update(
+    await this.usersRepository.update(
       { email },
       { isResettingPassword: false, password },
     );
+    return true;
   }
 
   async confirmEmail(email: string) {
-    return await this.usersRepository.update(
-      { email },
-      { isEmailConfirmed: true },
-    );
+    await this.usersRepository.update({ email }, { isEmailConfirmed: true });
+    return true;
   }
 }
