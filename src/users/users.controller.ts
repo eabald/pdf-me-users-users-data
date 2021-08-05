@@ -1,7 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/createUser.dto';
+import { CreateUserDto } from '@pdf-me/shared';
 import { ResetPasswordDto } from './dto/resetPassword.dto';
 
 @Controller('users')

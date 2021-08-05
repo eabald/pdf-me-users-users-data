@@ -3,9 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { RpcException } from '@nestjs/microservices';
-import { CreateUserDto } from './dto/createUser.dto';
 import { PostgresErrorCode } from '../database/postgresErrorCode.enum';
-import { ResetPasswordDto } from './dto/resetPassword.dto';
+import { ResetPasswordDto, CreateUserDto } from '@pdf-me/shared';
 
 @Injectable()
 export class UsersService {
