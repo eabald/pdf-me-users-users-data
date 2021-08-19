@@ -3,7 +3,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { RpcException } from '@nestjs/microservices';
 import { PostgresErrorCode } from '../database/postgresErrorCode.enum';
-import { ResetPasswordDto, CreateUserDto, UserEntity } from '@pdf-me/shared';
+import {
+  ResetPasswordDto,
+  CreateUserDto,
+  UserEntity,
+  SaveApiKeyDto,
+} from '@pdf-me/shared';
 
 @Injectable()
 export class UsersService {
@@ -68,6 +73,14 @@ export class UsersService {
 
   async confirmEmail(email: string) {
     await this.usersRepository.update({ email }, { isEmailConfirmed: true });
+    return true;
+  }
+
+  async saveApiKey(keyData: SaveApiKeyDto) {
+    await this.usersRepository.update(
+      { id: keyData.userId },
+      { key: keyData.key },
+    );
     return true;
   }
 }

@@ -1,7 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { UsersService } from './users.service';
-import { CreateUserDto, ResetPasswordDto } from '@pdf-me/shared';
+import { CreateUserDto, ResetPasswordDto, SaveApiKeyDto } from '@pdf-me/shared';
 
 @Controller('users')
 export class UsersController {
@@ -35,5 +35,10 @@ export class UsersController {
   @MessagePattern({ cmd: 'users-confirm-email' })
   async confirmEmail(@Payload() payload: string) {
     return this.usersService.confirmEmail(payload);
+  }
+
+  @MessagePattern({ cmd: 'users-save-api-key' })
+  async saveApiKey(@Payload() payload: SaveApiKeyDto) {
+    return this.usersService.saveApiKey(payload);
   }
 }
