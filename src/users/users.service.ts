@@ -1,4 +1,4 @@
-import { Injectable, HttpStatus } from '@nestjs/common';
+import { Injectable, HttpStatus, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { RpcException } from '@nestjs/microservices';
@@ -9,18 +9,23 @@ import {
   UserEntity,
   SaveApiKeyDto,
 } from '@pdf-me/shared';
+import { ClientProxy } from '@nestjs/microservices';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(UserEntity)
     private usersRepository: Repository<UserEntity>,
+    @Inject('LIMITS_SERVICE') private limitsService: ClientProxy,
   ) {}
 
   async create(userData: CreateUserDto) {
     try {
       const newUser = await this.usersRepository.create(userData);
       await this.usersRepository.save(newUser);
+      await this.limitsService
+        .send({ cmd: 'limits-create' }, newUser.id)
+        .toPromise();
       return newUser;
     } catch (error) {
       if (error?.code === PostgresErrorCode.UniqueViolation) {
