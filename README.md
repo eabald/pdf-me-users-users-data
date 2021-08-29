@@ -6,7 +6,7 @@ This service main concern is to manage users data mainly for authorization but f
 
 ## Development
 
-To start api-gateway service in development mode first of all install npm dependencies:
+To start users-data service in development mode first of all install npm dependencies:
 
 ```bash
 npm i
