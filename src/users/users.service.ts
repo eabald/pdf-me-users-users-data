@@ -8,7 +8,7 @@ import {
   CreateUserDto,
   UserEntity,
   SaveApiKeyDto,
-} from '@pdf-me/shared';
+} from '@eabald/pdf-me-shared';
 import { ClientProxy } from '@nestjs/microservices';
 
 @Injectable()
